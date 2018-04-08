@@ -6,7 +6,7 @@ from django.core.handlers.wsgi import WSGIRequest
 from django.shortcuts import render,HttpResponseRedirect,HttpResponse
 
 # Create your views here.
-from django.views.generic import CreateView, DetailView
+from django.views.generic import CreateView, DetailView, FormView, ListView
 
 from .forms import CreateForm
 from .models import Post
@@ -90,12 +90,36 @@ def my_create_view(request):
 
 
 
-
-
-
+#
+#
+#
 # class CreatePost(CreateView):
 #     # queryset = Post.objects.all()
 #     model = Post
 #     fields = ["title","code_text"]
 #     template_name = "app_one/createPost.html"
-#     success_url = "app_one/create"
+#     success_url = "/app_one/create"
+#     http_method_names = ["get","post"]
+#
+#     def get_context_data(self, **kwargs):
+#         context=super(CreatePost,self).get_context_data(**kwargs)
+#         print(self.request.method)
+#         # context["alert"]=1
+#         # context["post_title"]="hello"
+#         return context
+#
+#
+
+
+
+class CreatePost(FormView):
+    form_class = CreateForm
+    template_name = "app_one/createPost.html"
+    model = Post
+    success_url = "app_one/create"
+
+
+class AutomationListView(ListView):
+    queryset = Post.objects.all()
+    context_object_name = "blogobject"
+    template_name = "app_one/automation.html"

@@ -6,6 +6,7 @@
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
   </head>
   <body>
   <!--NAVIGATION BAR-->
@@ -20,7 +21,7 @@
            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tutorials
            <span class="caret"></span></a>
            <ul class="dropdown-menu">
-             <li><a href="#">Automation</a></li>
+             <li><a href="{% url 'automation' %}">Automation</a></li>
              <li><a href="#">Software Development</a></li>
              <li><a href="#">Android</a></li>
            </ul>
@@ -44,7 +45,6 @@
   $("#loginouttext").attr("href", "{% url 'login' %}")
   </script>
 {% endif %}
-
 
   {% block body_block %}
   {% endblock  %}
