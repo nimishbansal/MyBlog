@@ -1,0 +1,38 @@
+{% extends 'app_one/base.html' %}
+{% if user.is_authenticated %}
+  <script>
+    document.getElementById("loginouttext").innerHTML="Logout";
+    $("#loginouttext").attr("href", "{% url 'logout' %}")
+</script>
+{% else %}
+  <script>
+  $("#loginouttext").attr("href", "{% url 'login' %}")
+  </script>
+{% endif %}
+{% block body_block %}
+
+<script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+
+<div class="container">
+  <div class="card" style="width:90%">
+    <img class="card-img-top" src="https://he-s3.s3.amazonaws.com/media/avatars/nimish4july1998/resized/160/f1f0f64nimish.jpg" alt="Card image" style='float:left;margin-right:100px'>
+    <div class="card-body">
+    <h4 class="card-title">Nimish Bansal</h4>
+    <p class="card-text">I'm a passionate software developer and researcher from India. I write about Python, Software Development on a weekly basis</p>
+    <a href="#" class="btn btn-primary">See Profile</a>
+    </div>
+  </div>
+<pre class="prettyprint">
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
+from django.shortcuts import render
+
+# Create your views here.
+def index(request):
+    return render(request,"app_one/home.html")
+</pre>
+
+</div>
+
+{% endblock %}

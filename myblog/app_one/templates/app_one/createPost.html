@@ -1,0 +1,22 @@
+{% extends 'app_one/base.html' %}
+{% block body_block %}
+
+<!--<h1>{{ user.is_authenticated }}</h1>-->
+<!--<h1>{{ user.first_name }}</h1>-->
+
+{% if alert %}
+{% if post_title %}
+<script>
+alert("Post Created "+ "{{ post_title }}");
+</script>
+{% endif %}
+{% endif %}
+
+<form action="{% url 'create' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" value="Save" >Submit
+    </button>
+</form>
+
+{% endblock %}
