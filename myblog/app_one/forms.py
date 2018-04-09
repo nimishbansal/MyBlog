@@ -8,6 +8,6 @@ class CreateForm(forms.ModelForm):
     # code_text=forms.CharField(required=True,min_length=3)
     class Meta:
         model = Post
-        fields=["title","code_text"]
+        fields=["title","code_text","post_type"]
 
 

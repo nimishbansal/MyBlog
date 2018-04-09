@@ -123,3 +123,7 @@ class AutomationListView(ListView):
     queryset = Post.objects.all()
     context_object_name = "blogobject"
     template_name = "app_one/automation.html"
+
+# class AutomationDetailView(DetailView):
+#     template_name = ""
+#
