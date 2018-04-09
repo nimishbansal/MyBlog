@@ -1,0 +1,13 @@
+{% extends 'app_one/base.html' %}
+
+{% block body_block %}
+<div class="container">
+{% for i in blogobject %}
+<h2>{{ i.title }}</h2>
+ <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo_{{ forloop.counter }}">View</button>
+  <div id="demo_{{ forloop.counter }}" class="collapse">
+    <h3><pre class="prettyprint">{{ i.code_text }}</pre></h3>
+  </div>
+{% endfor %}
+</div>
+{% endblock %}

@@ -120,9 +120,16 @@ class CreatePost(FormView):
 
 
 class AutomationListView(ListView):
-    queryset = Post.objects.all()
+    queryset = Post.objects.filter(post_type="automation")
     context_object_name = "blogobject"
     template_name = "app_one/automation.html"
+
+
+class AndroidListView(ListView):
+    queryset = Post.objects.filter(post_type="android")
+    context_object_name = "blogobject"
+    template_name = "app_one/android.html"
+
 
 # class AutomationDetailView(DetailView):
 #     template_name = ""
