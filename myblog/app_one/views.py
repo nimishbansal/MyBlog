@@ -3,10 +3,10 @@ from __future__ import unicode_literals
 from django import forms
 from django.core.exceptions import ValidationError
 from django.core.handlers.wsgi import WSGIRequest
-from django.shortcuts import render,HttpResponseRedirect,HttpResponse
+from django.shortcuts import render, HttpResponseRedirect, HttpResponse, get_object_or_404
 
 # Create your views here.
-from django.views.generic import CreateView, DetailView, FormView, ListView
+from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView
 
 from .forms import CreateForm
 from .models import Post
@@ -131,6 +131,12 @@ class AndroidListView(ListView):
     template_name = "app_one/android.html"
 
 
-# class AutomationDetailView(DetailView):
-#     template_name = ""
-#
+class AutomationDetailView(DetailView):
+    queryset = Post.objects.filter(post_type="android")
+    template_name = "app_one/post_detail.html"
+    context_object_name = "object"
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        object = get_object_or_404(Post, post_id=pk)
+        return object
+

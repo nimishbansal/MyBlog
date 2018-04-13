@@ -1,53 +1,54 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  </head>
-  <body>
-  <!--NAVIGATION BAR-->
-    <nav class="navbar navbar-inverse">
-     <div class="container-fluid">
-       <div class="navbar-header">
-         <a class="navbar-brand" href="#">PyGeek</a>
-       </div>
-       <ul class="nav navbar-nav">
-         <li class="active"><a href="#">Home</a></li>
-         <li class="dropdown">
-           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Tutorials
-           <span class="caret"></span></a>
-           <ul class="dropdown-menu">
-             <li><a href="#">Automation</a></li>
-             <li><a href="#">Software Development</a></li>
-             <li><a href="#">Android</a></li>
-           </ul>
-         </li>
-         <li><a href="{% url 'aboutme' %}">About Me</a></li>
-         <li><a href="#">Contact Us</a></li>
-       </ul>
-       <ul class="nav navbar-nav navbar-right">
-        <li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="{% url 'login' %}" id="loginouttext"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-      </ul>
-     </div>
-   </nav>
-  <!--NAVIGATION BAR-->
-{% if user.is_authenticated %}
-  <script>
-    document.getElementById("loginouttext").innerHTML="Logout";
-    $("#loginouttext").attr("href", "{% url 'logout' %}")
-</script>
-{% else %}
-  <script>
-  $("#loginouttext").attr("href", "{% url 'login' %}")
-  </script>
-{% endif %}
+{% extends 'app_one/base.html' %}
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+  <!--<head>-->
+    <!--<meta charset="utf-8">-->
+     <!--<meta name="viewport" content="width=device-width, initial-scale=1">-->
+     <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">-->
+     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>-->
+     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+  <!--</head>-->
+  <!--<body>-->
+  <!--&lt;!&ndash;NAVIGATION BAR&ndash;&gt;-->
+    <!--<nav class="navbar navbar-inverse">-->
+     <!--<div class="container-fluid">-->
+       <!--<div class="navbar-header">-->
+         <!--<a class="navbar-brand" href="#">PyGeek</a>-->
+       <!--</div>-->
+       <!--<ul class="nav navbar-nav">-->
+         <!--<li class="active"><a href="#">Home</a></li>-->
+         <!--<li class="dropdown">-->
+           <!--<a class="dropdown-toggle" data-toggle="dropdown" href="#">Tutorials-->
+           <!--<span class="caret"></span></a>-->
+           <!--<ul class="dropdown-menu">-->
+             <!--<li><a href="#">Automation</a></li>-->
+             <!--<li><a href="#">Software Development</a></li>-->
+             <!--<li><a href="#">Android</a></li>-->
+           <!--</ul>-->
+         <!--</li>-->
+         <!--<li><a href="{% url 'aboutme' %}">About Me</a></li>-->
+         <!--<li><a href="#">Contact Us</a></li>-->
+       <!--</ul>-->
+       <!--<ul class="nav navbar-nav navbar-right">-->
+        <!--<li><a href="{% url 'signup' %}"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>-->
+        <!--<li><a href="{% url 'login' %}" id="loginouttext"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>-->
+      <!--</ul>-->
+     <!--</div>-->
+   <!--</nav>-->
+  <!--&lt;!&ndash;NAVIGATION BAR&ndash;&gt;-->
+<!--{% if user.is_authenticated %}-->
+  <!--<script>-->
+    <!--document.getElementById("loginouttext").innerHTML="Logout";-->
+    <!--$("#loginouttext").attr("href", "{% url 'logout' %}")-->
+<!--</script>-->
+<!--{% else %}-->
+  <!--<script>-->
+  <!--$("#loginouttext").attr("href", "{% url 'login' %}")-->
+  <!--</script>-->
+<!--{% endif %}-->
 
-  {% block body_block %}
-  {% endblock  %}
+  <!--{% block body_block %}-->
+  <!--{% endblock  %}-->
 
-  </body>
-</html>
+  <!--</body>-->
+<!--</html>-->

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-
+# os.environ['wsgi.url_scheme'] = 'https'
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 from os.path import join
 
@@ -28,10 +28,20 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+
+)
 
 # Application definition
 
 INSTALLED_APPS = [
+    "sslserver",
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,7 +50,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "app_one",
     "accounts",
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
 ]
+
+SITE_ID = 4
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -130,4 +149,4 @@ EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-print(BASE_DIR)
+

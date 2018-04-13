@@ -1,0 +1,13 @@
+{% extends 'app_one/base.html' %}
+
+{% block body_block %}
+<div class="container">
+    <div>
+        <h2>{{ object.title }}</h2>
+    </div>
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#{{ object.post_id }}">View</button>
+    <div id="{{ object.post_id }}" class="collapse">
+        <h3><pre class="prettyprint">{{ object.code_text }}</pre></h3>
+    </div>
+</div>
+{% endblock %}
