@@ -12,11 +12,16 @@ alert("Post Created "+ "{{ post_title }}");
 {% endif %}
 {% endif %}
 
+{% if user.is_authenticated %}
 <form action="{% url 'create' %}" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit" value="Save" >Submit
     </button>
 </form>
+{% else %}
+<p>User must login</p>
+{% endif %}
+
 
 {% endblock %}

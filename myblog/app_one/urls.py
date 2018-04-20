@@ -12,6 +12,7 @@ urlpatterns = [
     url(r"automation/", AutomationListView.as_view(), name="automation_list"),
     url(r"android/", AndroidListView.as_view(), name="android_list"),
     url(r"create/", my_create_view, name="create"),
-    url(r"posts/(?P<pk>\d+)/$",AutomationDetailView.as_view())
+    url(r"posts/(?P<pk>\d+)/$",AutomationDetailView.as_view()),
+    url(r"api/",include("app_one.api.urls")),
 
 ]

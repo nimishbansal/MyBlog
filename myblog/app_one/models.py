@@ -14,6 +14,7 @@ class Post(models.Model):
     post_id=models.AutoField(primary_key=True)
     code_text=models.TextField(validators=[MinLengthValidator(3,"atleast 3 characters")])
     post_type=models.TextField(choices=[("automation","automation"),("software","software"),("android","android")])
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
