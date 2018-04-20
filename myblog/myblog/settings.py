@@ -59,7 +59,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',
 ]
 
-SITE_ID = 5
+SITE_ID = 4
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -150,3 +150,17 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+# ACCOUNT_EMAIL_REQUIRED=True
+# ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            # 'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }}
