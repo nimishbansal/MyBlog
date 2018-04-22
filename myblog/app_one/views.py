@@ -131,12 +131,13 @@ class AndroidListView(ListView):
     template_name = "app_one/android.html"
 
 
-class AutomationDetailView(DetailView):
-    queryset = Post.objects.filter(post_type="android")
+class PostDetailView(DetailView):
+    queryset = Post.objects.all()
     template_name = "app_one/post_detail.html"
     context_object_name = "object"
     def get_object(self):
         pk = self.kwargs.get('pk')
         object = get_object_or_404(Post, post_id=pk)
         return object
+
 

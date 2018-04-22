@@ -3,47 +3,22 @@
 {% block body_block %}
 <style>
   .modal-dialog {
-  vertical-align: middle;
-}
+    vertical-align: middle;
+  }
 </style>
 
 <!-- Modal -->
-
-<div class="modal fade" id="myModal" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Login</h4>
-      </div>
-      <div class="modal-body">
-        <div class="container">
-          <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit" class="btn btn-default">Login</button>
-            <a href="{% url 'signup' %}"><button class="signup btn btn-default">Signup</button></a>
-            <a href="{% url 'home' %}"><button class="signup btn btn-default">Not now</button></a>
-            <a href="{% provider_login_url 'google' %}" class="btn btn-default">Google</a>
-            <!--<a href="{% provider_login_url 'facebook' %}" class="btn btn-default">facebook</a>-->
-            <!--<a href="{% provider_login_url 'facebook' method='js_sdk' %}" class="btn btn-default">Facebook Connect</a>-->
-            <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn btn-default">Facebook OAuth2</a>
-          </form>
-
-        </div>
-      </div>
-
-    </div>
-
-  </div>
+<div class="center-align">
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-default">Login</button>
+    <a href="{% url 'signup' %}"><button class="signup btn btn-default">Signup</button></a>
+    <a href="{% url 'home' %}"><button class="signup btn btn-default">Not now</button></a>
+    <a href="{% provider_login_url 'google' %}" class="btn btn-default">Google</a>
+    <!--<a href="{% provider_login_url 'facebook' %}" class="btn btn-default">facebook</a>-->
+    <!--<a href="{% provider_login_url 'facebook' method='js_sdk' %}" class="btn btn-default">Facebook Connect</a>-->
+    <a href="{% provider_login_url 'facebook' method='oauth2' %}" class="btn btn-default">Facebook OAuth2</a>
+  </form>
 </div>
-<script>
-
-$('#myModal').modal({
-    backdrop: 'static',
-    keyboard: false
-})
-$("#myModal").modal('show');
-</script>
 {% endblock %}

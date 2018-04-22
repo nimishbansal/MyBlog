@@ -1,13 +1,133 @@
 {% extends 'app_one/base.html' %}
 
 {% block body_block %}
-<div class="container">
-{% for i in blogobject %}
-<h2>{{ i.title }}</h2>
- <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo_{{ forloop.counter }}">View</button>
-  <div id="demo_{{ forloop.counter }}" class="collapse">
-    <h3><pre class="prettyprint">{{ i.code_text }}</pre></h3>
-  </div>
-{% endfor %}
-</div>
+    <style>
+        .selected, .selected:hover
+        {
+            background-color: red;
+        }
+    </style>
+
+    <script>
+
+        function fetchPosts(param,page)
+        {
+            console.log("calling fetchpost with page"+page);
+            var lang = 'py';
+
+            return $.ajax({
+                type: "GET",
+                url: "http://127.0.0.1:8000/app_one/api/",
+                data: {
+                    "post_type":param,
+                    "page":page
+                },
+
+                dataType: "JSON",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    result=data//doesnt goes here
+                    console.log(result)
+                    $("#output").empty();
+                    $(".pagination").empty();
+                    var lang = 'py';
+                    var addableText;
+                    console.log("no of pages"+result["no_of_pages"]);
+                    for (i =1;i<=result["no_of_pages"];i++) {
+                        if (i == page) {
+                            $(".pagination").last().append(' <li class="selected btn btn-primary">' + i.toString() + '</li>')
+                        }
+                        else {
+                            $(".pagination").last().append(' <li class="btn btn-primary">' + i.toString() + '</li>')
+                        }
+                    }
+
+
+
+                    var elements = document.querySelectorAll('.pagination li');
+                    console.log("element length is "+elements.length);
+                    for(j = 1;j <=elements.length; j++)
+                    {
+                        elements[j-1].onclick = function () {
+                            var clickpage=this.innerHTML;
+                            console.log(this.text);
+                            console.log("clickpage is "+clickpage.toString());
+                            $.when(fetchPosts("android", clickpage)).done(function (a1) {
+                                PR.prettyPrint();
+
+                            })
+                        }
+                    }
+
+                    for (i=0;i<result.results.length;i++) {
+
+                        var data = result.results[i]["code_text"];
+                        var title=result.results[i]["title"];
+
+                        $('#output').append("<div class='container posts'></div>");
+                        $(".container.posts").last().append("<h3>"+title+"</h3>");
+                        $(".container.posts").last().append('<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo_'+i.toString()+'">View</button><br/>');
+                        $(".container.posts").last().append('<br/><div id="demo_'+i.toString()+'" class="collapse"></div>');
+                        $(".container.posts").last().append('<hr/>');
+
+
+                        //$("<h6>").html(title).appendTo("#output");
+
+                        var hi = $("<pre>");
+                        var prettyPrintedText=PR.prettyPrintOne(data, lang);
+                        var html=hi.html(prettyPrintedText);
+                        var classAddedHTML= html.addClass('prettyprint lang-py prettyprinted');
+                        console.log(classAddedHTML[0]);
+                        try{
+                            classAddedHTML.appendTo("#demo_"+i.toString());
+                        }
+                        catch(e){
+                            alert('An error has occurred: '+e.message);
+                        }
+
+
+                        /*.html()
+                        .addClass('prettyprint lang-py prettyprinted')
+                        .appendTo('#output');         //error gaya
+*/
+                    }                      //run kario ek bar
+                },
+                error: function (textStatus, errorThrown) {
+                    Success = false;//doesnt goes here
+                }
+
+            });   //ye meri ajax jo api se utha rhi api??hmmm ouuu pai dikahaa
+        }
+
+
+        $(document).ready(function(e) {
+            $.when(fetchPosts("android", 1)).done(function (a1) {
+                PR.prettyPrint();
+
+
+
+            });
+        });
+
+
+
+
+    </script>
+
+    <div class="mainpage">
+        <div id="output" class="col s12 m8 offset-m1 xl7 offset-xl1">
+
+        </div>
+
+        <div class="container">
+            <ul class="pagination">
+
+            </ul>
+        </div>
+
+    </div>
+
+
+
 {% endblock %}
+
