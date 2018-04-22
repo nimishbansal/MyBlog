@@ -6,6 +6,10 @@
         {
             background-color: red;
         }
+        .btn-info
+        {
+            margin-right:15px;
+        }
     </style>
 
     <script>
@@ -61,14 +65,19 @@
 
                     for (i=0;i<result.results.length;i++) {
 
+                        var object=result.results[i];
                         var data = result.results[i]["code_text"];
                         var title=result.results[i]["title"];
+                        var post_id=result.results[i]["post_id"];
 
                         $('#output').append("<div class='container posts'></div>");
-                        $(".container.posts").last().append("<h3>"+title+"</h3>");
-                        $(".container.posts").last().append('<button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo_'+i.toString()+'">View</button><br/>');
-                        $(".container.posts").last().append('<br/><div id="demo_'+i.toString()+'" class="collapse"></div>');
-                        $(".container.posts").last().append('<hr/>');
+                        var lastContainerPost;
+                        lastContainerPost=$(".container.posts").last();
+                        lastContainerPost.last().append("<h3>"+title+"</h3>");
+                        lastContainerPost.last().append('<button type="button" class="btn btn-info" data-toggle="collapse" style="float:left" data-target="#demo_'+i.toString()+'">View</button>');
+                        lastContainerPost.last().append(' <div>' +'<a class="btn btn-primary discussion" href="'+'/app_one/posts/'+post_id+'">'+'Discussion' + '</a></div><br/>');
+                        lastContainerPost.last().append('<br/><div id="demo_'+i.toString()+'" class="collapse"></div>');
+                        lastContainerPost.last().append('<hr/>');
 
 
                         //$("<h6>").html(title).appendTo("#output");

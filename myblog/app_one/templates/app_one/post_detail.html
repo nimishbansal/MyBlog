@@ -1,26 +1,22 @@
 {% extends 'app_one/base.html' %}
 
 {% block body_block %}
-<script>
-    $(document).ready(function(){
-        $('.collapsible').collapsible();
-        $('li').removeClass("active");
+    <script>
+        $(document).ready(function(){
+            $('.collapsible').collapsible();
+            $('li').removeClass("active");
 
-    });
-</script>
+        });
+    </script>
 
-<div class=" ">
-    <div>
-        <h2>{{ object.title }}</h2>
+    <div class="container">
+        <div>
+            <h2>{{ object.title }}</h2>
+        </div>
+
+        <div class="container" style="display: block;"><h6><pre class="prettyprint">{{ object.code_text }}</pre></h6></div>
+
     </div>
 
 
-    <ul class="collapsible">
-        <li>
-            <div class="collapsible-header" tabindex="0" style="display: block;"><i class="material-icons">filter_drama</i>View</div>
-            <div class="collapsible-body" style="display: block;"><h6><pre class="prettyprint">{{ object.code_text }}</pre></h6></span></div>
-        </li>
-    </ul>
-
-</div>
 {% endblock %}
