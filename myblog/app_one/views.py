@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from django import forms
-from django.core.exceptions import ValidationError
-from django.core.handlers.wsgi import WSGIRequest
-from django.shortcuts import render, HttpResponseRedirect, HttpResponse, get_object_or_404
-
+from django.forms.utils import ErrorList
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
 # Create your views here.
-from django.views.generic import CreateView, DetailView, FormView, ListView, UpdateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import DetailView, FormView, ListView, CreateView
 
-from .forms import CreateForm
-from .models import Post
+from .forms import CommentModelForm,CreateForm
+from .models import Post, Comment
 
 
 def index(request):
@@ -119,6 +120,7 @@ class CreatePost(FormView):
     success_url = "app_one/create"
 
 
+
 class AutomationListView(ListView):
     queryset = Post.objects.filter(post_type="automation")
     context_object_name = "blogobject"
@@ -139,5 +141,59 @@ class PostDetailView(DetailView):
         pk = self.kwargs.get('pk')
         object = get_object_or_404(Post, post_id=pk)
         return object
+
+    def get_context_data(self, **kwargs):
+        context=super(PostDetailView, self).get_context_data(**kwargs)
+        context["commentCreateForm"]=CommentModelForm()
+        return context
+
+
+class PostDetailCommentCreateView(CreateView):
+    model=Comment
+    template_name = "app_one/post_detail.html"
+    fields = ["comment_text"]
+
+    def get_success_url(self, *args,**kwargs):
+        print("getting success url")
+        print(self.kwargs)
+        # obj = form.instance or self.object
+        return reverse_lazy("detail", kwargs={'pk': self.kwargs["pk"]})
+
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        print(pk)
+        object = get_object_or_404(Post, post_id=pk)
+        return object
+
+    def form_valid(self, form):
+        obj = form.save(commit=False)
+        print(dir(form))
+        obj.post_id=get_object_or_404(Post, post_id=self.kwargs.get('pk'))
+
+        try:
+            obj.user = self.request.user
+            obj.save()
+        except Exception as E:
+            form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList(["user must be logged in to continue"])
+            return super(PostDetailCommentCreateView, self).form_invalid(form)
+            return
+            # form.errors=["user must be login to continue"]
+            # super(PostDetailCommentCreateView, self).form_invalid(form)
+
+        # obj.created_by = self.request.user
+        # obj.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+    def get_context_data(self, **kwargs):
+        context=super(PostDetailCommentCreateView, self).get_context_data(**kwargs)
+        print(context)
+        context["object"]=self.get_object()
+        return context
+
+
+
+
+
 
 

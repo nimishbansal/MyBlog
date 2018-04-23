@@ -19,6 +19,7 @@ class Post(models.Model):
     post_type=models.TextField(choices=[("automation","automation"),("software","software"),("android","android")])
     timestamp = models.DateTimeField(auto_now_add=True)
 
+
     def __str__(self):
         return self.title
 
@@ -31,9 +32,10 @@ class Comment(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
 
 
-
-
     def __str__(self):
         return self.comment_text+" ("+str(self.comment_id)+")"
+
+    class  Meta:
+        ordering=['timestamp']
 
 

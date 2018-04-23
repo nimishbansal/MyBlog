@@ -80,6 +80,18 @@
                 <hr/>
                 <h4><b>Comments({{ object.commentobject.all.count }})</b></h4><br/>
 
+
+                {# COMMENT FORM #}
+                <form method="post" action="">
+                    {{ form.as_p }}
+                     {% csrf_token %}
+                    <input type="submit" value=" Comment "/>
+                </form>
+
+
+                <hr/>
+
+                {# ALL COMMENTS #}
                 {% for comment in object.commentobject.all %}
 
                     <div class="container-fluid">
