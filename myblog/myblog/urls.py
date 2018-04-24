@@ -15,7 +15,10 @@ Including another URLconf
 """
 import allauth
 from django.conf.urls import url,include
+from django.conf.urls.static import static
 from django.contrib import admin
+
+from myblog import settings
 from . import views
 urlpatterns = [
     url(r'^$', views.index,name="home"),
@@ -24,7 +27,7 @@ urlpatterns = [
     url(r'accounts/', include('accounts.urls')),
     url(r'accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/', include('allauth.urls')),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 # from allauth import account
 from django.contrib.auth.urls import views

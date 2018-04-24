@@ -1,10 +1,10 @@
 from django.contrib.auth.forms import UserCreationForm
+from django import forms
+#password include kyo na kar rah bina include kre aarha h to tujhe kya chahiye dikhaata hu
+from .models import UserProfile
 
-class SignupForm(UserCreationForm):
-    def __init__(self):
-        self.password1.help_text
-        super(SignupForm,self).__init__()
-        print(locals())
+class UserProfileForm(UserCreationForm):
+    class Meta:
+        model = UserProfile
+        fields=("username","photu")
 
-
-x=SignupForm()
