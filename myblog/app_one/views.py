@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from functools import partial
 from django import forms
+from django.forms import BaseForm
+
 from django.forms.utils import ErrorList
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -155,7 +157,6 @@ class PostDetailCommentCreateView(CreateView):
 
     def get_success_url(self, *args,**kwargs):
         print("getting success url")
-        print(self.kwargs)
         # obj = form.instance or self.object
         return reverse_lazy("detail", kwargs={'pk': self.kwargs["pk"]})
 
@@ -165,9 +166,20 @@ class PostDetailCommentCreateView(CreateView):
         object = get_object_or_404(Post, post_id=pk)
         return object
 
-    def form_valid(self, form):
+
+    def as_p(self,form):
+        "Return this form rendered as HTML <p>s."
+        return form._html_output(
+            normal_row='<p%(html_class_attr)s>%(label)s %(field)s%(help_text)s</p>',
+            error_row='<b> %s </b>',
+            row_ender='</p>',
+            help_text_html=' <span class="helptext">%s</span>',
+            errors_on_separate_row=True)
+
+    def form_valid(self, form:BaseForm):
+
+
         obj = form.save(commit=False)
-        print(dir(form))
         obj.post_id=get_object_or_404(Post, post_id=self.kwargs.get('pk'))
 
         try:
@@ -176,17 +188,15 @@ class PostDetailCommentCreateView(CreateView):
         except Exception as E:
             form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList(["user must be logged in to continue"])
             return super(PostDetailCommentCreateView, self).form_invalid(form)
-            return
-            # form.errors=["user must be login to continue"]
-            # super(PostDetailCommentCreateView, self).form_invalid(form)
 
-        # obj.created_by = self.request.user
-        # obj.save()
+
         return HttpResponseRedirect(self.get_success_url())
 
 
     def get_context_data(self, **kwargs):
         context=super(PostDetailCommentCreateView, self).get_context_data(**kwargs)
+        context["form"]["comment_text"].label=""
+        context["form"].as_p=partial(self.as_p,context["form"])
         print(context)
         context["object"]=self.get_object()
         return context

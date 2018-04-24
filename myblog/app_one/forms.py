@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import Post,Comment
-
+from django.utils.translation import ugettext_lazy as _
 
 class CreateForm(forms.ModelForm):
     # title=forms.CharField(required=True,min_length=5,max_length=100)
