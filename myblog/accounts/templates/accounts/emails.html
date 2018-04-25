@@ -1,0 +1,6 @@
+{% extends "app_one/base.html" %}
+{% block body_block %}
+    {% for email in email_list %}
+        {{ email.email_text }} by {{ email.email_sender }}
+    {% endfor %}
+{% endblock %}

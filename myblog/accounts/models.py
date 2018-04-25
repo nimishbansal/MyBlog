@@ -29,3 +29,12 @@ class UserProfile(models.Model):
 
     def get_profile_url(self):
         return "profile_pics/user_{0}.png".format(self.user.username)
+
+
+
+class Email(models.Model):
+    email_sender=models.ForeignKey(User,on_delete=models.CASCADE,related_name="emitter")
+    email_receiver=models.ForeignKey(User,on_delete=models.CASCADE,related_name="receiver")
+    title=models.CharField(max_length=100)
+    email_text=models.TextField(max_length=20000)
+

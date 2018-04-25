@@ -1,8 +1,5 @@
 from django.contrib import admin
-from .models import UserProfile
+from .models import UserProfile,Email
 # Register your models here.
 admin.site.register(UserProfile)
-#do tab kyu khuli hui he yaha ruk ek sec
-#theek?aagya?
-
-from allauth.account.forms import SignupForm
+admin.site.register(Email)

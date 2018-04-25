@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views import generic
 
+from accounts.models import Email
 from app_one.models import User
 from myblog import settings
 from .forms import UserProfileForm, UserForm
@@ -101,3 +102,18 @@ class UserFollowView(generic.View):
 
         return redirect("detail",self.kwargs.get("username"))
 
+
+class EmailView(generic.ListView):
+    template_name = "accounts/emails.html"
+    # model = Email
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            return Email.objects.filter(email_receiver=self.request.user)
+        else:
+            return super(EmailView, self).get_queryset()
+    
+    def get_context_data(self, *args, **kwargs):
+        context=super(EmailView, self).get_context_data(*args,**kwargs)
+        if self.request.user.is_authenticated:
+            context["email_list"]=Email.objects.filter(email_receiver=self.request.user)
+        return context
