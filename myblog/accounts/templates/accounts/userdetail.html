@@ -1,0 +1,41 @@
+{% extends "app_one/base.html" %}
+{% load staticfiles %}
+{% block body_block %}
+    <style>
+        .userprofilephoto
+        {
+            height: 200px;
+            width: 200px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <div class="container">
+        <div class="card w3-card">
+            <img src="{{ MEDIA_URL }}{{ object.User.get_photo_url }}" class="userprofilephoto">
+            <h1>{{ object.User.user.username }}</h1>
+            <p class="title">CEO & Founder, PYGEEK</p>
+            <p>USICT</p>
+            <a href="#"><i class="fa btn-lg fa-dribbble"></i></a>
+            <a href="#"><i class="fa btn-lg fa-twitter"></i></a>
+            <a href="#"><i class="fa btn-lg fa-linkedin"></i></a>
+            <a href="#"><i class="fa btn-lg fa-facebook"></i></a>
+            <p><button style="float: left">Contact</button><button>Follow</button></p>
+        </div>
+
+        <h3>Followers</h3>
+        <br/>
+        {% for item in object.followed_by.all %}
+            <a href="/profiles/{{ item.user.username }}">{{ item.user.username }}</a>
+            <br/>
+        {% endfor %}
+
+        <h3>Following</h3>
+        {% for item in object.User.following.all %}
+            <a href="/profiles/{{ item.username }}">{{ item.username }}</a>
+            <br/>
+        {% endfor %}
+    </div>
+
+{% endblock %}
+
+

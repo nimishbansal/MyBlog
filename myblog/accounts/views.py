@@ -1,5 +1,5 @@
 from django.core.handlers.wsgi import WSGIRequest
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 
 # Create your views here.
 from django.contrib.auth.forms import UserCreationForm
@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 from app_one.models import User
+from myblog import settings
 from .forms import UserProfileForm, UserForm
 
 
@@ -64,5 +65,35 @@ class SignUp(generic.View):
 #     template_name = 'signup.html'
 
 
+class UserDetailView(generic.DetailView):
+    template_name = "accounts/userdetail.html"
 
-#are yaha der se load ho raha h
+    def get_object(self):
+        object=get_object_or_404(User,username__iexact=self.kwargs.get("username"))
+        print(object.User.following)
+        return object
+
+    def get_context_data(self, **kwargs):
+        context=super(UserDetailView, self).get_context_data(**kwargs)
+        context["MEDIA_URL"]=settings.MEDIA_URL
+        return context
+
+
+class UserFollowView(generic.View):
+    def get(self,request,username):
+        if request.user.is_authenticated:
+            user_to_follow=User.objects.filter(username__iexact=username)
+            if user_to_follow.count()==1:
+                user_to_follow=user_to_follow.get(username=username)
+                currentuser=request.user
+                if user_to_follow!=currentuser:
+                    print(user_to_follow)
+                    print(currentuser)
+                    currentuserProfile=currentuser.User
+                    if user_to_follow in currentuserProfile.following.all():
+                        currentuserProfile.following.remove(user_to_follow)
+                    else:
+                        currentuserProfile.following.add(user_to_follow)
+
+        return redirect("detail",self.kwargs.get("username"))
+
