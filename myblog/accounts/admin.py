@@ -4,4 +4,5 @@ from .models import UserProfile
 admin.site.register(UserProfile)
 #do tab kyu khuli hui he yaha ruk ek sec
 #theek?aagya?
-#
+
+from allauth.account.forms import SignupForm

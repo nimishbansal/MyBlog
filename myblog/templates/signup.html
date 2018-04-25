@@ -5,7 +5,8 @@
         <h2>Sign up</h2>
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            {{ form.as_p }}
+            {{ userform.as_p }}
+            {{ profileform.as_p }}
             <button type="submit">Sign up</button>
         </form>
     </div>
