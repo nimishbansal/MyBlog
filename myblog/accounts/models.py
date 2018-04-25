@@ -26,3 +26,6 @@ class UserProfile(models.Model):
 
     def get_photo_url(self):
         return "profile_pics/user_{0}.png".format(self.user.username)
+
+    def get_profile_url(self):
+        return "profile_pics/user_{0}.png".format(self.user.username)

@@ -80,6 +80,10 @@ class UserDetailView(generic.DetailView):
 
 
 class UserFollowView(generic.View):
+    """
+     FLOW:
+     current-user->authenticated->user_to_follow_exists->both are not same->if alreading followingremove else follow
+     """
     def get(self,request,username):
         if request.user.is_authenticated:
             user_to_follow=User.objects.filter(username__iexact=username)
