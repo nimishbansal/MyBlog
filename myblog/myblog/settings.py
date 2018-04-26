@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     "app_one",
     "accounts",
-
+    'chat',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -61,7 +61,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.facebook',
 
-    'rest_framework'
+    'rest_framework',
+    'channels',
 ]
 
 SITE_ID = 4
@@ -158,6 +159,16 @@ SOCIALACCOUNT_AUTO_SIGNUP=True
 ACCOUNT_EMAIL_REQUIRED=True
 ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 
+
+ASGI_APPLICATION = "myblog.routing.application"
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
 
 SOCIALACCOUNT_PROVIDERS = {
     'google': {

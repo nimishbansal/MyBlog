@@ -25,6 +25,7 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index,name="home"),
+    url(r'^chat/', include('chat.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^app_one/',include("app_one.urls")),
     url(r'accounts/', include('accounts.urls')),
