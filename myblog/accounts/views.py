@@ -105,15 +105,5 @@ class UserFollowView(generic.View):
 
 class EmailView(generic.ListView):
     template_name = "accounts/emails.html"
-    # model = Email
-    def get_queryset(self):
-        if self.request.user.is_authenticated:
-            return Email.objects.filter(email_receiver=self.request.user)
-        else:
-            return super(EmailView, self).get_queryset()
-    
-    def get_context_data(self, *args, **kwargs):
-        context=super(EmailView, self).get_context_data(*args,**kwargs)
-        if self.request.user.is_authenticated:
-            context["email_list"]=Email.objects.filter(email_receiver=self.request.user)
-        return context
+    model = Email
+    context_object_name = "email_list"

@@ -17,6 +17,7 @@ import allauth
 from django.conf.urls import url,include
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth.decorators import login_required
 
 from accounts.views import UserDetailView,UserFollowView,EmailView
 from myblog import settings
@@ -30,7 +31,7 @@ urlpatterns = [
     url(r'accounts/', include('django.contrib.auth.urls')),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^profiles/(?P<username>[\w.@+-]+)/$', UserDetailView.as_view(), name='detail'),
-    url(r'^profiles/(?P<username>[\w.@+-]+)/mail/$', EmailView.as_view(), name='mail'),
+    url(r'^profiles/(?P<username>[\w.@+-]+)/mail/$', login_required(EmailView.as_view()), name='mail'),
     url(r'^profiles/(?P<username>[\w.@+-]+)/follow/$', UserFollowView.as_view(), name='follow')
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
