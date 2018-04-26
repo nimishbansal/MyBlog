@@ -157,8 +157,12 @@ class PostDetailCommentCreateView(CreateView):
 
     def get_success_url(self, *args,**kwargs):
         print("getting success url")
+        print(*args)
+        print(**kwargs)
         # obj = form.instance or self.object
-        return reverse_lazy("detail", kwargs={'pk': self.kwargs["pk"]})
+        url=reverse_lazy("detail", kwargs={'pk': self.kwargs["pk"]})
+        print(url)
+        return url
 
     def get_object(self):
         pk = self.kwargs.get('pk')
@@ -186,6 +190,7 @@ class PostDetailCommentCreateView(CreateView):
             obj.user = self.request.user
             obj.save()
         except Exception as E:
+            print(E)
             form._errors[forms.forms.NON_FIELD_ERRORS] = ErrorList(["user must be logged in to continue"])
             return super(PostDetailCommentCreateView, self).form_invalid(form)
 
@@ -197,6 +202,8 @@ class PostDetailCommentCreateView(CreateView):
         context=super(PostDetailCommentCreateView, self).get_context_data(**kwargs)
         context["form"]["comment_text"].label=""
         context["form"].as_p=partial(self.as_p,context["form"])
+        context["success_url"]=reverse_lazy("detail", kwargs={'pk': self.kwargs["pk"]})
+
         print(context)
         context["object"]=self.get_object()
         return context
