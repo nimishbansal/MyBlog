@@ -1,0 +1,18 @@
+1524756109611	geckodriver	INFO	geckodriver 0.18.0
+1524756109639	geckodriver	INFO	Listening on 127.0.0.1:52105
+1524756110815	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1524756113044	Marionette	INFO	Enabled via --marionette
+1524756118386	Marionette	INFO	Listening on port 37669
+1524756119206	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 19130, Chrome_ChildThread] WARNING: pipe error (23): Connection reset by peer: file /build/firefox-BgGWsI/firefox-59.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+[Child 19130, Chrome_ChildThread] WARNING: pipe error (35): Connection reset by peer: file /build/firefox-BgGWsI/firefox-59.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+[Child 19130, Chrome_ChildThread] WARNING: pipe error (3): Connection reset by peer: file /build/firefox-BgGWsI/firefox-59.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+1524756215334	geckodriver	INFO	geckodriver 0.18.0
+1524756215337	geckodriver	INFO	Listening on 127.0.0.1:42895
+1524756216447	geckodriver::marionette	INFO	Starting browser /usr/bin/firefox with args ["-marionette"]
+1524756217202	Marionette	INFO	Enabled via --marionette
+1524756220114	Marionette	INFO	Listening on port 33379
+1524756220162	Marionette	WARN	TLS certificate errors will be ignored for this session
+[Child 19399, Chrome_ChildThread] WARNING: pipe error (21): Connection reset by peer: file /build/firefox-BgGWsI/firefox-59.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+[Child 19399, Chrome_ChildThread] WARNING: pipe error (35): Connection reset by peer: file /build/firefox-BgGWsI/firefox-59.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
+[Child 19399, Chrome_ChildThread] WARNING: pipe error (3): Connection reset by peer: file /build/firefox-BgGWsI/firefox-59.0.2+build1/ipc/chromium/src/chrome/common/ipc_channel_posix.cc, line 353
