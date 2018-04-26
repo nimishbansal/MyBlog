@@ -6,10 +6,24 @@
     <title>Chat Room</title>
 </head>
 <body>
-    <textarea id="chat-log" cols="100" rows="20"></textarea><br/>
-    <input id="chat-message-input" type="text" size="100"/><br/>
+<style>
+    .messages
+    {
+        width: 80%;
+        height: 400px;
+        background-color: #cefff5;
+    }
+</style>
+
+<div class="container" style="margin-left: 20%">
+    <ul class="messages">
+
+    </ul>
+    <input id="chat-message-input" type="text" style="width: 80%"><br/>
     <input id="chat-message-submit" type="button" value="Send"/>
+</div>
 </body>
+
 <script>
     var roomName = {{ room_name_json }};
     var chatSocket = new WebSocket(
@@ -19,7 +33,7 @@
     chatSocket.onmessage = function(e) {
         var data = JSON.parse(e.data);
         var message = data['message'];
-        document.querySelector('#chat-log').value += (message + '\n');
+        document.querySelector('.messages').innerHTML+="{{ request.user }}: "+message+"</li><br/>"
     };
 
     chatSocket.onclose = function(e) {
