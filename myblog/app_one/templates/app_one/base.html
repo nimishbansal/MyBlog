@@ -7,7 +7,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- Compiled and minified JavaScript -->
+
+    {# My Styled CSS#}
     <style>
         .pln{color:#000}@media screen{.str{color:#080}.kwd{color:#008}.com{color:#800}.typ{color:#606}.lit{color:#066}.clo,.opn,.pun{color:#660}.tag{color:#008}.atn{color:#606}.atv{color:#080}.dec,.var{color:#606}.fun{color:red}}@media print,projection{.kwd,.tag,.typ{font-weight:700}.str{color:#060}.kwd{color:#006}.com{color:#600;font-style:italic}.typ{color:#404}.lit{color:#044}.clo,.opn,.pun{color:#440}.tag{color:#006}.atn{color:#404}.atv{color:#060}}pre.prettyprint{padding:2px;border:1px solid #888}ol.linenums{margin-top:0;margin-bottom:0}li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{list-style-type:none}li.L1,li.L3,li.L5,li.L7,li.L9{background:#eee}
 
@@ -18,6 +22,21 @@
         .navbar-inverse .navbar-nav > li > a,.navbar-inverse .navbar-brand
         {
             color:white;
+        }
+
+        .chatlist
+        {
+            position: fixed; /*or fixed*/
+            right: 0px;
+        }
+        .chatlist li
+        {
+            background-color: darkseagreen;
+            border-radius: 25%;
+            border:2px solid blue;
+            text-decoration: #000066 ;
+            font-size: xx-large;
+            margin: 4px;
         }
     </style>
 
@@ -76,8 +95,7 @@
 </head>
 <body>
 
-
-<!--NAVIGATION BAR-->
+{# Navigation Bar #}
 <nav class="navbar navbar-inverse">
     <div class="container-fluid mynavbar">
         <div class="navbar-header">
@@ -103,9 +121,12 @@
         </ul>
     </div>
 </nav>
+{# ______________ #}
 
+
+
+{# Login/Logout text change #}
 {% if user.is_authenticated %}
-
     <script>
         document.getElementById("loginouttext").innerHTML="<span class='gyphicon glyphicon-log-in'>Logout</span>";
         $("#loginouttext").attr("href", "{% url 'logout' %}")
@@ -114,8 +135,293 @@
     <script>
         $("#loginouttext").attr("href", "{% url 'login' %}")
     </script>
+{% endif %}
+{# _______________________ #}
+
+
+
+{#Appending friend list#}
+{% if request.user.is_authenticated %}
+
+    <style>
+        .chatboxElement
+        {
+            width:40px;
+            height: 40px;
+            background-color: #000066;
+            margin:2px;
+        }
+        .ok
+        {
+            background-color: green;
+        }
+        .main-section{
+            width: 300px;
+            position: fixed;
+            right:0px;
+            bottom:-350px;
+        }
+        .first-section:hover{
+            cursor: pointer;
+        }
+        .open-more{
+            bottom:0px;
+            transition:0.4s;
+        }
+        .border-chat{
+            border:1px solid #FD8468;
+            margin: 0px;
+        }
+        .first-section{
+            background-color:#FD8468;
+        }
+        .first-section p{
+            color:#fff;
+            margin:0px;
+            padding: 10px 0px;
+        }
+        .first-section p:hover{
+            color:#fff;
+            cursor: pointer;
+        }
+        .right-first-section{
+            text-align: right;
+        }
+        .right-first-section i{
+            color:#fff;
+            font-size: 15px;
+            padding: 12px 3px;
+        }
+        .right-first-section i:hover{
+            color:#fff;
+        }
+        .chat-section ul li{
+            list-style: none;
+            margin-top:10px;
+            position: relative;
+        }
+        .chat-section{
+            overflow-y:scroll;
+            height:300px;
+        }
+        .chat-section ul{
+            padding: 0px;
+        }
+        .left-chat img,.right-chat img{
+            width:50px;
+            height:50px;
+            float:left;
+            margin:0px 10px;
+        }
+        .right-chat img{
+            float:right;
+        }
+        .second-section{
+            padding: 0px;
+            margin: 0px;
+            background-color: #F3F3F3;
+            height: 300px;
+        }
+        .left-chat,.right-chat{
+            overflow: hidden;
+        }
+        .left-chat p,.right-chat p{
+            background-color:#FD8468;
+            padding: 10px;
+            color:#fff;
+            border-radius: 5px;
+            float:left;
+            width:60%;
+            margin-bottom:20px;
+        }
+        .left-chat span,.right-chat span{
+            position: absolute;
+            left:70px;
+            top:60px;
+            color:#B7BCC5;
+        }
+        .right-chat span{
+            left:45px;
+        }
+        .right-chat p{
+            float:right;
+            background-color: #FFFFFF;
+            color:#FD8468;
+        }
+        .third-section{
+            border-top: 1px solid #EEEEEE;
+        }
+        .text-bar input{
+            width:90%;
+            margin-left:-15px;
+            padding:10px 10px;
+            border:1px solid #fff;
+        }
+        .text-bar a i{
+            background-color:#FD8468;
+            color:#fff;
+            width:30px;
+            height:30px;
+            padding:7px 0px;
+            border-radius: 50%;
+            text-align: center;
+        }
+        .left-chat:before{
+            content: " ";
+            position:absolute;
+            top:0px;
+            left:55px;
+            bottom:150px;
+            border:15px solid transparent;
+            border-top-color:#FD8468;
+        }
+        .right-chat:before{
+            content: " ";
+            position:absolute;
+            top:0px;
+            right:55px;
+            bottom:150px;
+            border:15px solid transparent;
+            border-top-color:#fff;
+        }
+
+    </style> {# css for chat boxes #}
+    <div class="chatlist">
+        <ul>
+
+        </ul>
+    </div> {# Allusers list #}
+    <div class="chatboxeslist">
+
+
+    </div> {# list of all chat boxes #}
+
+
+
+    <script>
+        var allUsers=[];
+        $(document).ready(function(){
+
+            function setOnClickListenersForChatBox(chatboxUsernameSelector)
+            {
+                $(chatboxUsernameSelector.find(".left-first-section")["0"]).click(function(){
+                    $(chatboxUsernameSelector.find(".main-section")["0"]).toggleClass("open-more");
+                });
+
+                $(chatboxUsernameSelector.find(".fa-minus")["0"]).click(function(){
+                    $(chatboxUsernameSelector.find(".main-section")["0"]).toggleClass("open-more");
+                });
+
+                $(chatboxUsernameSelector.find(".fa-times")["0"]).click(function(){
+                    $(chatboxUsernameSelector.find(".main-section")["0"]).hide();
+                });
+            }
+            var chatlistUIElement=$(".chatlist ul");
+            var chatBoxListUIElement=$(".chatboxeslist");
+            var prefix="chatbox";
+            var chatMainSectionHTML;
+            var ShiftBoxctr=0;
+            if (1==1) {
+                chatMainSectionHTML = "<div class=\"ok main-section\">\n" +
+                    "\t<div class=\"row border-chat\">\n" +
+                    "\t\t<div class=\"col-md-12 col-sm-12 col-xs-12 first-section\">\n" +
+                    "\t\t\t<div class=\"row\">\n" +
+                    "\t\t\t\t<div class=\"col-md-8 col-sm-6 col-xs-6 left-first-section\">\n" +
+                    "\t\t\t\t\t<p>Chat</p>\n" +
+                    "\t\t\t\t</div> <!--chat title-->\n" +
+                    "\t\t\t\t<div class=\"col-md-4 col-sm-6 col-xs-6 right-first-section\">\n" +
+                    "\t\t\t\t\t<a href=\"#\"><i class=\"fa fa-minus\" aria-hidden=\"true\"></i></a>\n" +
+                    "\t\t\t\t\t<a href=\"#\"><i class=\"fa fa-clone\" aria-hidden=\"true\"></i></a>\n" +
+                    "\t\t\t\t\t<a href=\"#\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i></a>\n" +
+                    "\t\t\t\t</div><!--top3 buttons-->\n" +
+                    "\t\t\t</div>\n" +
+                    "\t\t</div>\n" +
+                    "\t</div>\n" +
+                    "\t<div class=\"row border-chat\">\n" +
+                    "\t\t<div class=\"col-md-12 col-sm-12 col-xs-12 second-section\">\n" +
+                    "\t\t\t<div class=\"chat-section\">\n" +
+                    "\t\t\t\t<ul>\n" +
+                    "\t\t\t\t\t<li>\n" +
+                    "\t\t\t\t\t\t<div class=\"left-chat\">\n" +
+                    "\t\t\t\t\t\t\t<img src=\"image/1499345471_boy.png\">\n" +
+                    "\t\t\t\t\t\t\t<p>Lorem ipsum dolor sit ameeserunt.\n" +
+                    "\t\t\t\t\t\t\t</p>\n" +
+                    "\t\t\t\t\t\t\t<span>2 min</span>\n" +
+                    "\t\t\t\t\t\t</div>\n" +
+                    "\t\t\t\t\t</li><!--chat left-->\n" +
+                    "\t\t\t\t\t<li>\n" +
+                    "\t\t\t\t\t\t<div class=\"right-chat\">\n" +
+                    "\t\t\t\t\t\t\t<img src=\"image/1499345471_boy.png\">\n" +
+                    "\t\t\t\t\t\t\t<p>Lorem ipsum dolor sit ameeserunt.</p>\n" +
+                    "\t\t\t\t\t\t\t<span>2 min</span>\n" +
+                    "\t\t\t\t\t\t</div>\n" +
+                    "\t\t\t\t\t</li><!--chat right-->\n" +
+                    "\t\t\t\t</ul>\n" +
+                    "\t\t\t</div>\n" +
+                    "\t\t</div>\n" +
+                    "\t</div>\n" +
+                    "\t<div class=\"row border-chat\">\n" +
+                    "\t\t<div class=\"col-md-12 col-sm-12 col-xs-12 third-section\">\n" +
+                    "\t\t\t<div class=\"text-bar\">\n" +
+                    "\t\t\t\t<input type=\"text\" placeholder=\"Write messege\"><a href=\"#\"><i class=\"fa fa-arrow-right\" aria-hidden=\"true\"></i></a>\n" +
+                    "\t\t\t</div>\n" +
+                    "\t\t</div>\n" +
+                    "\t</div>\n" +
+                    "</div>";
+            } {# declaring chatMainSectionHTML #}
+
+            {% for followinguser in request.user.User.following.all %}
+
+                ShiftBoxctr+=1;
+                allUsers.push("{{ followinguser.username }}");
+                chatlistUIElement.append("<li><a href=\"#\" class=\"myuser\" id=\"{{ followinguser.username }}\">{{ followinguser.username }}</a></li>");
+                chatBoxListUIElement.append("<div class =\"chatboxElement chatbox{{ followinguser.username }}\"></div>");
+                var chatboxUsernameSelector=$(".chatbox"+"{{ followinguser.username }}");
+                chatboxUsernameSelector.append(chatMainSectionHTML);
+                $(".chatbox"+"{{ followinguser.username }}"+" > .main-section").css("right",320*ShiftBoxctr+"px");
+                setOnClickListenersForChatBox(chatboxUsernameSelector);
+
+
+            {% endfor %}
+
+
+            {% for followedByuser in request.user.followed_by.all %}
+                {% if followedByuser.user not in request.user.User.following.all %}
+
+                    ShiftBoxctr+=1;
+                    allUsers.push("{{ followedByuser.user.username }}");
+                    chatlistUIElement.append("<li><a href=\"#\" class=\"myuser\" id=\"{{ followedByuser.user.username }}\">{{ followedByuser.user.username }}</a></li>");
+                    chatBoxListUIElement.append("<div class =\"chatboxElement chatbox{{ followedByuser.user.username }}\"></div>");
+                    var chatboxUsernameSelector=$(".chatbox"+"{{ followedByuser.user.username }}");
+                    chatboxUsernameSelector.append(chatMainSectionHTML);
+                    $(".chatbox"+"{{ followedByuser.user.username }}"+" > .main-section").css("right",320*ShiftBoxctr+"px");
+                    setOnClickListenersForChatBox(chatboxUsernameSelector);
+
+                {% endif %}
+            {% endfor %}
+
+        });
+
+
+
+    </script> {# Appending Above User list #}
+    <script>
+        $(document).ready(function () {
+            for (var i=0;i<allUsers.length;i++)
+            {
+                $("#"+allUsers[i]).on("click",function(event)
+                {
+
+                })
+            }
+        });
+
+    </script>
+
 
 {% endif %}
+
+
 
 {% block body_block %}
 {% endblock  %}
